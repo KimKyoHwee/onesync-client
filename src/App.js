@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "./pages/login"; // login.js에서 기본 export를 가져옴
+import Login from './pages/Login'
 
 function App() {
   return (

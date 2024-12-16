@@ -398,10 +398,7 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-#webcrumbs .bg-yellow-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
-}
+
 #webcrumbs .p-6 {
   padding: 24px;
 }
@@ -459,4 +456,19 @@ video {
 #webcrumbs .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+.logo {
+  height: 48px; /* 높이 48px */
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+#webcrumbs .bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: #d64bf1;
+}
+#webcrumbs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Viewport height */
+  background-color: #f3f4f6; /* 연한 회색 */
 }
