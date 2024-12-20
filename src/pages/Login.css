@@ -463,7 +463,7 @@ video {
 }
 #webcrumbs .bg-yellow-500 {
   --tw-bg-opacity: 1;
-  background-color: #d64bf1;
+  background-color: #cc9af8
 }
 #webcrumbs {
   display: flex;
@@ -471,4 +471,10 @@ video {
   align-items: center;
   height: 100vh; /* Viewport height */
   background-color: #f3f4f6; /* 연한 회색 */
+}
+
+#cjonelogo {
+  height: 50px; /* 높이를 36px로 줄이기 */
+  width: auto;  /* 가로 크기는 비율 유지 */
+  object-fit: contain; /* 이미지 비율 유지 */
 }

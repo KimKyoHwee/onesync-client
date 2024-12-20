@@ -51,7 +51,7 @@ const Login = () => {
       <div className="w-[360px] bg-white shadow rounded-lg p-6 space-y-5">
         {/* 브랜드 로고 */}
         <div className="w-full flex items-center justify-center">
-          <img src={cjonelogo} alt="CJ ONE 로고" className="h-12 w-auto" />
+          <img src={cjonelogo} alt="CJ ONE 로고" className="h-12 w-auto"id="cjonelogo" />
         </div>
 
         {/* 오류 메시지 표시 */}
