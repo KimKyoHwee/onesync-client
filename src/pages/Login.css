@@ -463,7 +463,7 @@ video {
 }
 #webcrumbs .bg-yellow-500 {
   --tw-bg-opacity: 1;
-  background-color: #cc9af8
+  background-color: #cc9af8;
 }
 #webcrumbs {
   display: flex;

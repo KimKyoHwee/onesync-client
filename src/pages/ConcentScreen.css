@@ -480,13 +480,14 @@ video {
 /* 동의하고 계속하기 버튼 스타일 */
 #webcrumbs .continue-button {
     display: block;
+    margin-top: 20px;
     width: 100%; /* 가로로 긴 버튼 */
-    padding: 12px 0; /* 상하 여백 추가 */
+    padding: 10px 0; /* 상하 여백 추가 */
     text-align: center; /* 텍스트 가운데 정렬 */
     font-weight: 600;
     font-size: 16px;
     border-radius: 9999px; /* 라운드 형태 버튼 */
-    border: 2px solid #7341ff; /* 보라색 테두리 */
+    border: 2px solid #cc9af8; /* 보라색 테두리 */
     transition: background-color 0.3s ease, color 0.3s ease; /* 부드러운 전환 */
   }
   
@@ -500,7 +501,7 @@ video {
   
   /* 버튼 활성화 상태 (보라색 배경) */
   #webcrumbs .continue-button.enabled {
-    background-color: #7341ff; /* 보라색 배경 */
+    background-color: #cc9af8; /* 보라색 배경 */
     color: white; /* 글씨 색 흰색 */
     cursor: pointer; /* 활성화 상태 마우스 */
     border: none; /* 테두리 제거 */
@@ -509,5 +510,6 @@ video {
   #webcrumbs .logo {
     height: 40px; /* 원하는 높이 */
     width: auto; /* 비율 유지 */
+    
   }
   

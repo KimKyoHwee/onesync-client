@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ConcentScreen.css";
 import cjonelogo from "../images/cjonelogo.JPG"; // 이미지 경로를 import
+import mega from "../images/mega.jpg"; // 이미지 경로를 import
 
 export const ConcentScreen = () => {
   const [allRequiredChecked, setAllRequiredChecked] = useState(false);
@@ -34,8 +35,21 @@ export const ConcentScreen = () => {
     allCheckboxes.forEach((checkbox) => (checkbox.checked = isChecked));
   };
 
+  const handleLogin = () => {
+    const authUrl =
+      "http://localhost:9090/realms/onesync/protocol/openid-connect/auth?" +
+      "client_id=webclient&" +
+      "redirect_uri=http://localhost:3000/callback&" +
+      "response_type=code&" +
+      "scope=openid";
+    window.location.href = authUrl; // Keycloak으로 리다이렉트
+  };
+
   return (
-    <div id="webcrumbs" className="flex items-center justify-center h-screen bg-gray-100" >
+    <div
+      id="webcrumbs"
+      className="flex items-center justify-center h-screen bg-gray-100"
+    >
       {/* 동의 화면 전체 상자 */}
       <div className="w-[400px] bg-white shadow-md rounded-lg p-6 ">
         {/* 브랜드 로고 */}
@@ -43,7 +57,6 @@ export const ConcentScreen = () => {
           <img
             src={cjonelogo}
             alt="CJ ONE Logo"
-            //className="h-6 w-auto" // 로고 사이즈 조정
             className="logo" // 로고 사이즈 조정
           />
         </div>
@@ -51,15 +64,15 @@ export const ConcentScreen = () => {
         {/* 제휴업체 정보 */}
         <div className="flex items-center gap-3 mb-5">
           <img
-            src="https://tools-api.webcrumbs.org/image-placeholder/50/50/abstract/1"
+            src={mega}
             alt="logo"
             className="w-[50px] h-[50px] object-contain"
           />
           <div>
             <h1 className="font-title text-lg font-semibold text-neutral-950">
-              Affiliates A
+              Mega Coffee
             </h1>
-            <p className="text-sm text-neutral-600">(제휴업체 A)</p>
+            <p className="text-sm text-neutral-600">(메가커피)</p>
           </div>
         </div>
 
@@ -165,7 +178,7 @@ export const ConcentScreen = () => {
               onChange={handleOptionalToggle}
             />
             <label htmlFor="optionalAgreement" className="text-sm text-neutral-600">
-              [선택] 제휴업체 A에서 CJ ONE 포인트 사용을 허가합니다.
+              [선택] 제휴업체 (메가커피)에서 CJ ONE 포인트 사용을 허가합니다.
             </label>
           </div>
         </div>
@@ -176,6 +189,7 @@ export const ConcentScreen = () => {
             allRequiredChecked ? "enabled" : "disabled"
           }`}
           disabled={!allRequiredChecked}
+          onClick={handleLogin}
         >
           동의하고 계속하기
         </button>

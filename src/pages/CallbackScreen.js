@@ -1,47 +1,82 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./CallbackScreen.css";
 
 const CallbackScreen = () => {
+  const [authCode, setAuthCode] = useState("");
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    // URL에서 Authorization Code 추출
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
-
     if (code) {
-      console.log("Authorization Code:", code);
-      // Access Token 요청 함수 호출
-      exchangeToken(code);
+      setAuthCode(code);
     } else {
-      console.error("Authorization Code가 없습니다.");
+      alert("Authorization code not found in the URL.");
     }
   }, []);
 
-  const exchangeToken = async (code) => {
-    try {
-      const response = await fetch("http://localhost:8080/oauth2/token", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          code: code,
-          redirect_uri: "http://localhost:3000/callback",
-          client_id: "example1",
-          client_secret: "f8262990-3c0f-4b27-84d8-a31c8536dbdd", // 클라이언트 시크릿
-        }),
-      });
+  const handleGetToken = async () => {
+    if (!authCode) {
+      alert("Authorization code is missing.");
+      return;
+    }
+    console.log("Token Endpoint:", process.env.REACT_APP_ONESYNC_TOKEN_ENDPOINT);
+console.log("Redirect URI:", process.env.REACT_APP_ONESYNC_REDIRECT_URI);
+console.log("Client ID:", process.env.REACT_APP_ONESYNC_CLIENT_ID);
+console.log("Client Secret:", process.env.REACT_APP_ONESYNC_CLIENT_SECRET);
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Access Token:", data.access_token);
-        // Access Token 저장 또는 후속 작업
-      } else {
-        console.error("토큰 요청 실패:", response.status);
-      }
-    } catch (err) {
-      console.error("토큰 요청 중 오류 발생:", err);
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_ONESYNC_TOKEN_ENDPOINT,
+        new URLSearchParams({
+          grant_type: "authorization_code",
+          code: authCode,
+          redirect_uri: process.env.REACT_APP_ONESYNC_REDIRECT_URI, // Callback URI
+          client_id: process.env.REACT_APP_ONESYNC_CLIENT_ID,
+          client_secret: process.env.REACT_APP_ONESYNC_CLIENT_SECRET,
+          scope: "openid profile email", // Include necessary scopes
+        }),
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        }
+      );
+
+      // Token 정보를 가지고 TokenScreen으로 리다이렉트
+      const params = new URLSearchParams({
+        accessToken: response.data.access_token,
+        idToken: response.data.id_token,
+      });
+      window.location.href = `/token?${params.toString()}`;
+    } catch (error) {
+      console.error("Error fetching token:", error);
+      setError("Failed to fetch token. Please check the console for more details.");
     }
   };
 
-  return <div>처리 중...</div>;
+  return (
+    <div className="callback-container">
+      <div className="card">
+        <div className="card-header">
+          <h1 className="title">Authorization Code Received</h1>
+        </div>
+        <div className="card-content">
+          {authCode ? (
+            <>
+              <p className="description">Your Authorization Code:</p>
+              <div className="code-display">{authCode}</div>
+              <button className="primary-button" onClick={handleGetToken}>
+                Fetch Access Token
+              </button>
+            </>
+          ) : (
+            <p className="description">No authorization code found.</p>
+          )}
+        </div>
+        {error && <div className="error-message">{error}</div>}
+      </div>
+    </div>
+  );
 };
 
 export default CallbackScreen;
